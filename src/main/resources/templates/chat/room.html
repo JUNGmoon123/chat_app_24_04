@@ -71,6 +71,7 @@
         form.content.value = '';
         form.content.focus();
     }
+
     // 채팅 메세지 작성
 
     // 채팅 메세지들 읽기(read)
@@ -104,16 +105,16 @@
         });
 
         // Chat__loadMore();// 즉시실행
-        setTimeout(Chat__loadMore, 500);
+        // setTimeout(Chat__loadMore, 500); -> 무분별한 호출
     }
 
-    //sse생성
-    const sse = new EventSource("/sse/connect");    //sse접속이다. 연결을 물고있어서 언제어디서든 서버로부터 응답을 받을수 있다.
+    // SSE 연결
+    // SSE == 단방향 무전기
+    // 방향 : 서버 -> 클라이언트
+    const sse = new EventSource("/sse/connect");
 
-
-    //sse를 요청해서 무전기 처럼 사용한다,
-    //어떤 지령이 내려오면 sse는 그 행동을 해야한다.(여기에 설정된 행동)
-    sse.addEventListener('chat__messageAdded', e =>{
+    // 서버로부터 "chat__messageAdded 라는 명령이 내려오면 Chat__loadMore 라는 함수를 실행해
+    sse.addEventListener('chat__messageAdded', e => {
             Chat__loadMore();
         }
     )
