@@ -107,6 +107,17 @@
         setTimeout(Chat__loadMore, 500);
     }
 
+    //sse생성
+    const sse = new EventSource("/sse/connect");    //sse접속이다. 연결을 물고있어서 언제어디서든 서버로부터 응답을 받을수 있다.
+
+
+    //sse를 요청해서 무전기 처럼 사용한다,
+    //어떤 지령이 내려오면 sse는 그 행동을 해야한다.(여기에 설정된 행동)
+    sse.addEventListener('chat__messageAdded', e =>{
+        Chat__loadMore();
+        }
+    )
+
     Chat__loadMore();
 
     // 채팅 메세지들 읽기(read)
